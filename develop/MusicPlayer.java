@@ -35,7 +35,7 @@ public class MusicPlayer extends Application {
     public void start(Stage stage) {
         // Create UI controls
         playPauseButton = new Button("Play");
-        stopButton = new Button("Replay");
+        stopButton = new Button("Reset");
         shuffleButton = new Button("Shuffle");
         timeElapsedLabel = new Label("00:00");
         timeElapsedLabel.setFont(new Font(20));
