@@ -35,15 +35,18 @@ public class MusicPlayer extends Application {
     public void start(Stage stage) {
         // Create UI controls
         playPauseButton = new Button("Play");
-        stopButton = new Button("Stop");
+        stopButton = new Button("Replay");
         shuffleButton = new Button("Shuffle");
         timeElapsedLabel = new Label("00:00");
         timeElapsedLabel.setFont(new Font(20));
 
         // Set button widths
         playPauseButton.setPrefWidth(100);
+        playPauseButton.setStyle("-fx-background-color: #3CB371; -fx-text-fill: white;");
         stopButton.setPrefWidth(100);
+        stopButton.setStyle("-fx-background-color: #DC143C; -fx-text-fill: white;");
         shuffleButton.setPrefWidth(100);
+        shuffleButton.setStyle("-fx-background-color: #4169E1; -fx-text-fill: white;");
 
         // Create button box
         HBox buttonBox = new HBox(10);
@@ -54,6 +57,7 @@ public class MusicPlayer extends Application {
         // Create layout
         BorderPane layout = new BorderPane();
         layout.setBottom(buttonBox);
+        layout.setStyle("-fx-background-color: #02A3FA;");
 
         // Create playlist
         playlist = getMp3FilesFromFolder("E:/programs/Java Project/audio files");
@@ -71,8 +75,15 @@ public class MusicPlayer extends Application {
         layout.setCenter(mediaView);
 
         // name of current audio file
+        HBox topBox = new HBox();
         currentSongLabel = new Label(playlist.get(currentSongIndex).getName());
-        layout.setTop(currentSongLabel);
+        currentSongLabel.setFont(new Font(50)); // Increase font size
+        topBox.getChildren().add(currentSongLabel);
+        layout.setTop(topBox);
+
+        // Center label in HBox
+        HBox.setHgrow(currentSongLabel, javafx.scene.layout.Priority.ALWAYS);
+        topBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         // Update elapsed time label
         mediaPlayer.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
