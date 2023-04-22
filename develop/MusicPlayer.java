@@ -13,9 +13,19 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+// import javafx.scene.Group;
+import javafx.scene.image.Image;
+//import javafx.scene.image.ImageView;
+//import javafx.scene.layout.StackPane;
 import java.io.File;
+
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -37,8 +47,8 @@ public class MusicPlayer extends Application {
     @Override
     public void start(Stage stage) {
         // window
-        stage.setWidth(700);
-        stage.setHeight(1000);
+        stage.setWidth(1450);
+        stage.setHeight(950);
         // Create UI controls
         playPauseButton = new Button("Play");
         stopButton = new Button("Reset");
@@ -46,13 +56,14 @@ public class MusicPlayer extends Application {
         nextButton = new Button("Next");
         previousButton = new Button("Previous");
         timeElapsedLabel = new Label("00:00");
-        timeElapsedLabel.setFont(new Font(20));
+        timeElapsedLabel.setFont(new Font(22));
+        timeElapsedLabel.setStyle("-fx-text-fill: red;");
 
         // Set button widths
         playPauseButton.setPrefWidth(100);
         playPauseButton.setStyle("-fx-background-color: #3CB371; -fx-text-fill: white;");
         stopButton.setPrefWidth(100);
-        stopButton.setStyle("-fx-background-color: #DC143C; -fx-text-fill: white;");
+        stopButton.setStyle("-fx-background-color: #7e3e9e; -fx-text-fill: white;");
         shuffleButton.setPrefWidth(100);
         shuffleButton.setStyle("-fx-background-color: #4169E1; -fx-text-fill: white;");
         nextButton.setPrefWidth(100);
@@ -62,15 +73,31 @@ public class MusicPlayer extends Application {
 
         // Create button box
         HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(playPauseButton, stopButton, shuffleButton, nextButton, previousButton,
+        buttonBox.getChildren().addAll(previousButton, playPauseButton, stopButton, shuffleButton, nextButton,
                 timeElapsedLabel);
         buttonBox.setPadding(new Insets(10, 0, 50, 0));
         buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
 
-        // Create layout
+        // Load the image
+        Image backgroundImage = new Image("file:///E:/PICS/screeshots/wallpapers/32165.jpg");
+
+        // Create a BackgroundImage object with fixed size
+        BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true,
+                false);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+
+        // Set the background of the BorderPane
         BorderPane layout = new BorderPane();
+        layout.setBackground(new Background(background));
+
+        // Set the size of the BorderPane
+        double width = 800;
+        double height = 1200;
+        layout.setPrefSize(width, height);
+
+        // Add the button box to the bottom of the BorderPane
         layout.setBottom(buttonBox);
-        layout.setStyle("-fx-background-color: #02A3FA;");
 
         // Create playlist
         playlist = getMp3FilesFromFolder("E:/programs/Java Project/audio files");
@@ -160,15 +187,15 @@ public class MusicPlayer extends Application {
     }
 
     private List<File> getMp3FilesFromFolder(String folderPath) {
-        List<File> mp3Files = new ArrayList<>();
         File folder = new File(folderPath);
         File[] files = folder.listFiles();
+        List<File> mp3Files = new ArrayList<>();
         for (File file : files) {
             if (file.isFile() && file.getName().endsWith(".mp3")) {
                 mp3Files.add(file);
             }
         }
-        Collections.shuffle(mp3Files);
+        // Collections.shuffle(mp3Files);
         return mp3Files;
     }
 
@@ -179,6 +206,12 @@ public class MusicPlayer extends Application {
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         currentSongLabel.setText(playlist.get(currentSongIndex).getName());
+        mediaPlayer.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
+            int elapsedSeconds = (int) newTime.toSeconds();
+            int minutes = elapsedSeconds / 60;
+            int seconds = elapsedSeconds % 60;
+            timeElapsedLabel.setText(String.format("%02d:%02d", minutes, seconds));
+        });
         playPauseButton.setText("Pause");
         mediaPlayer.play();
     }
