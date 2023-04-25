@@ -107,7 +107,7 @@ public class MusicPlayer extends Application {
         mediaView = new MediaView(mediaPlayer);
         // Create current song label
         currentSongLabel = new Label(playlist.get(currentSongIndex).getName());
-        currentSongLabel.setFont(new Font(20));
+        currentSongLabel.setFont(new Font(30));
         currentSongLabel.setStyle("-fx-text-fill: white;");
 
         // Add media view and current song label to layout
