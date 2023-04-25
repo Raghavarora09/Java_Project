@@ -189,7 +189,6 @@ public class MusicPlayer extends Application {
                 mp3Files.add(file);
             }
         }
-        // Collections.shuffle(mp3Files);
         return mp3Files;
     }
 
