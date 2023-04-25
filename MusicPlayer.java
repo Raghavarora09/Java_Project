@@ -73,7 +73,7 @@ public class MusicPlayer extends Application {
         buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         // Load the image
-        Image backgroundImage = new Image("file:///E:/PICS/screeshots/wallpapers/32165.jpg");
+        Image backgroundImage = new Image("file:/// #ADD THE BACKGROUND IMAGE PATH HERE# ");
 
         // Create a BackgroundImage object with fixed size
         BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true,
@@ -94,7 +94,7 @@ public class MusicPlayer extends Application {
         layout.setBottom(buttonBox);
 
         // Create playlist
-        playlist = getMp3FilesFromFolder("E:/programs/Java Project/audio files");
+        playlist = getMp3FilesFromFolder(" #ADD THE PATH TO THE LOCAL MP3 FILES# ");
         if (playlist.isEmpty()) {
             System.err.println("No MP3 files found in folder");
             return;
