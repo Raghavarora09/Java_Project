@@ -6,5 +6,4 @@ shuffle button to randomly play songs from the selected folder
 
 
 
-Work is still under progress. 
-Will be regularly updating.<3
+Finally Done👌
